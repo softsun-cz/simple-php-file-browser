@@ -18,3 +18,6 @@ Simple PHP File Browser is a tiny web application that helps you to browse your 
 <p align="center">
  <img src="./screenshot.png" alt="Simple PHP File Browser" />
 </p>
+
+## License
+This software is developed as open source under [MIT License](./LICENSE).

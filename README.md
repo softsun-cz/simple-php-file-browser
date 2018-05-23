@@ -1,9 +1,9 @@
 # About
-Simple PHP File Browser is a tiny web application that helps you to browse your files uploaded on your web server.
+**Simple PHP File Browser** is a tiny web application that helps you to browse your files uploaded on your web server.
 
 ## Features
-- Very small size of code (less than 8 kB)
-- Sort folders and files by name, date of last modification and size
+- Very small code size (less than 8 kB)
+- Sort folders and files by name, date of last modification and size (ascending / descending)
 - Disk usage
 - Responsive mobile design
 - Ability to create your own HTML and CSS templates

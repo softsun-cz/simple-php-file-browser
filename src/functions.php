@@ -18,4 +18,11 @@
   }
   return $urlsd;
  }
+ 
+ function isUsingDots($path) {
+  foreach (explode('/', $path) as $dirname) {
+   if (trim($dirname) == '..') return true;
+  }
+  return false;
+ }
 ?>

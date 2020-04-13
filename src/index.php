@@ -11,7 +11,9 @@
   $dir = trim($_GET['dir']);
   if (!empty($dir)) $subdir = $dir;
  }
+ $urlsubdir = getURLPath($subdir);
  $currentdir = $basedir . $subdir;
+ $urlcurrentdir =  getURLPath($currentdir);
  $templatedir = './templates/' . $template . '/';
  $header = file_get_contents($templatedir . 'header.html');
  $body = file_get_contents($templatedir . 'body.html'); 
@@ -32,9 +34,9 @@
   $no = $sort == 'name' && !$order ? true : false;
   $do = $sort == 'date' && !$order ? true : false;
   $so = $sort == 'size' && !$order ? true : false;
-  $sortname = './sort.php?sort=name&amp;order=' . ($no ? 1 : 0) . '&amp;dir=' . $subdir;
-  $sortdate = './sort.php?sort=date&amp;order=' . ($do ? 1 : 0) . '&amp;dir=' . $subdir;
-  $sortsize = './sort.php?sort=size&amp;order=' . ($so ? 1 : 0) . '&amp;dir=' . $subdir;
+  $sortname = './sort.php?sort=name&amp;order=' . ($no ? 1 : 0) . '&amp;dir=' . $urlsubdir;
+  $sortdate = './sort.php?sort=date&amp;order=' . ($do ? 1 : 0) . '&amp;dir=' . $urlsubdir;
+  $sortsize = './sort.php?sort=size&amp;order=' . ($so ? 1 : 0) . '&amp;dir=' . $urlsubdir;
   if ($diskinfo) {
    $disk = str_replace('[[percent]]', $percent, $disk);
    $disk = str_replace('[[used]]', human($used), $disk);
@@ -51,8 +53,8 @@
   $body = str_replace('[[ordersize]]', $so ? '&#9650;' : '&#9660;', $body);
   $rows = '';
   $values = scandir($currentdir, 0);
-  if ($subdir != '/') {
-   $link = './?dir=' . substr($subdir, 0, strrpos(substr($subdir, 0, -1), '/') + 1);   
+  if ($urlsubdir != '/') {
+   $link = './?dir=' . substr($urlsubdir, 0, strrpos(substr($urlsubdir, 0, -1), '/') + 1);   
    $rows .= str_replace('[[link]]', $link, $rowback) . "\r\n";
   }
   $dirs = array();
@@ -66,14 +68,14 @@
   array_multisort(array_column($dirs, $sort == 'size' ? 'name' : $sort), $sort == 'size' ? SORT_ASC : ($order ? SORT_DESC : SORT_ASC), $dirs);
   array_multisort(array_column($files, $sort), $order ? SORT_DESC : SORT_ASC, $files);
   foreach ($dirs as $d) {
-   $link = './?dir=' . $subdir . $d['name'] . '/';
+   $link = './?dir=' . $urlsubdir . rawurlencode($d['name']) . '/';
    $r = str_replace('[[link]]', $link, $rowdir);
    $r = str_replace('[[name]]', $d['name'], $r);
    $r = str_replace('[[date]]', date("Y-m-d H:i:s", $d['date']), $r);
    $rows .= $r . "\r\n";
   }
   foreach ($files as $f) {
-   $link = $currentdir . $f['name'];
+   $link = $urlcurrentdir . rawurlencode($f['name']);
    $r = str_replace('[[link]]', $link, $rowfile);
    $r = str_replace('[[name]]', $f['name'], $r);
    $r = str_replace('[[date]]', date("Y-m-d H:i:s", $f['date']), $r);

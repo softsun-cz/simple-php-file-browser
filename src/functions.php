@@ -8,4 +8,14 @@
   }
   return round($bytes, 2) . ' ' . $type[$i] . 'B';
  }
+
+ function getURLPath($path) {
+  $fex = false;
+  $urlsd = '';
+  foreach (explode('/', $path) as $sd) {
+   $urlsd .= ($fex ? '/' : '') . rawurlencode($sd);
+   if (!$fex) $fex = true;
+  }
+  return $urlsd;
+ }
 ?>

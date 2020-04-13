@@ -27,8 +27,8 @@
  $header = str_replace('[[subdir]]', $subdir, $header);
  $header = str_replace('[[css]]', $templatedir . 'style.css', $header);
  echo $header . "\r\n";
- if (file_exists($currentdir) && is_dir($currentdir)) {
-  if ($allow_parent || (!$allow_parent && !isUsingDots($subdir))) {
+ if ($allow_parent || (!$allow_parent && !isUsingDots($subdir))) {
+  if (file_exists($currentdir) && is_dir($currentdir)) {
    $total = disk_total_space($basedir);
    $free = disk_free_space($basedir);
    $used = $total - $free;
@@ -88,12 +88,12 @@
    $body = str_replace('[[rows]]', $rows, $body);
    echo $body . "\r\n";
   } else {
-    $error_dots = str_replace('[[subdir]]', $subdir, $error_dots);
-    echo $error_dots . "\r\n";
+    $error_notfound = str_replace('[[subdir]]', $subdir, $error_notfound);
+    echo $error_notfound . "\r\n";
   }
  } else {
-  $error_notfound = str_replace('[[subdir]]', $subdir, $error_notfound);
-  echo $error_notfound . "\r\n";
+  $error_dots = str_replace('[[subdir]]', $subdir, $error_dots);
+  echo $error_dots . "\r\n";
  }
  echo $footer;
 ?>
